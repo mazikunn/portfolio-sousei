@@ -3,69 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>作成倉庫メモリー</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- ✅ SEO対策：Google検索向けタイトルと説明 -->
+  <title>創生ポートフォリオ掲示板</title>
+  <meta name="description" content="創生ポートフォリオ掲示板へようこそ。大学生のプロジェクトや意見交換ができる場です。" />
+  <meta name="keywords" content="創生, ポートフォリオ, 掲示板, 大学生, プロジェクト, 意見交換" />
+  <meta name="author" content="あなたの名前" />
+
+  <!-- ✅ SNS・スマホでの表示も強化したい人向け -->
+  <meta property="og:title" content="創生ポートフォリオ掲示板" />
+  <meta property="og:description" content="大学生の創生プロジェクトや意見を自由に投稿・共有できる掲示板です。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://あなたのサイト名.onrender.com" />
+  <meta property="og:image" content="https://あなたのサムネ画像URL（任意）" />
+
+  <!-- CSSなど -->
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
   <header>
-    <h1>作成倉庫メモリー</h1>
-    <nav>
-      <ul>
-        <li><a href="#about">プロフィール</a></li>
-        <li><a href="#portfolio">作成物</a></li>
-        <li><a href="#skills">スキル</a></li>
-        <li><a href="#contact">ご意見箱</a></li>
-      </ul>
-    </nav>
+    <h1>創生ポートフォリオ掲示板</h1>
+    <p>みんなの意見やプロジェクトを自由に投稿しましょう！</p>
   </header>
 
   <main>
-    <section class="hero">
-      <h2>0から作品を形に。</h2>
-      <p>未経験でも、ひとつひとつ積み重ねて。</p>
-    </section>
+    <form action="/add" method="post">
+      <input type="text" name="name" placeholder="名前" required>
+      <textarea name="comment" placeholder="コメントを入力..." required></textarea>
+      <button type="submit">投稿</button>
+    </form>
 
-    <section id="about" class="section">
-      <h2>プロフィール</h2>
-      <p>現在プログラミング学習中。基礎から積み上げ、自作のツールやミニゲームなどを制作しています。</p>
-    </section>
-
-    <section id="portfolio" class="section">
-      <h2>作成物一覧</h2>
-      <ul>
-        <li>・タイマーアプリ（HTML/CSS/JavaScript）</li>
-        <li>・ToDoリスト（ローカルストレージ使用）</li>
-        <li>・じゃんけんゲーム（JavaScript）</li>
-        <li>・診断ツール風ページ（初期Python + Flask）</li>
-      </ul>
-    </section>
-
-    <section id="skills" class="section">
-      <h2>使用言語・スキル</h2>
-      <ul>
-        <li>HTML / CSS / JavaScript</li>
-        <li>Python（Flask）</li>
-        <li>Git / GitHub</li>
-      </ul>
-    </section>
-
-    <section id="contact" class="section">
-      <h2>ご意見箱</h2>
-      <p>このポートフォリオへのご感想・改善点・応援メッセージなど、お気軽にお寄せください。</p>
-      <form action="https://formspree.io/f/your-form-id" method="POST">
-        <label for="name">お名前（任意）</label><br>
-        <input type="text" id="name" name="name"><br><br>
-
-        <label for="message">ご意見・ご感想</label><br>
-        <textarea id="message" name="message" rows="5" required></textarea><br><br>
-
-        <button type="submit">送信する</button>
-      </form>
+    <section id="posts">
+      <!-- Flaskで投稿一覧がここに表示されます -->
+      {% for post in posts %}
+        <div class="post">
+          <strong>{{ post.name }}</strong>：{{ post.comment }}
+        </div>
+      {% endfor %}
     </section>
   </main>
 
   <footer>
-    <p>© 2025 作成倉庫メモリー</p>
+    <p>&copy; 2025 創生掲示板</p>
   </footer>
 </body>
 </html>
