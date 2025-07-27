@@ -1,51 +1,61 @@
-// script.js
-const db = firebase.database();
-const postRef = db.ref("posts");
-const PASSWORD = "1225";
+// Firebase 初期化
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
 
-// 書き込み
-document.getElementById("submitBtn").addEventListener("click", () => {
-  const name = document.getElementById("name").value || "匿名";
-  const content = document.getElementById("message").value;
-  const pw = prompt("4桁のパスワードを入力してください");
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
-  if (pw !== PASSWORD) {
-    alert("パスワードが違います。");
+// 投稿関数
+function postMessage() {
+  const message = document.getElementById('message').value.trim();
+  const password = document.getElementById('postPassword').value.trim();
+  const errorEl = document.getElementById('postError');
+
+  errorEl.textContent = '';
+
+  if (!message) {
+    errorEl.textContent = '書き込み内容を入力してください';
     return;
   }
 
-  if (content.trim()) {
-    const newPost = {
-      name: name,
-      content: content,
-      timestamp: Date.now()
-    };
-    postRef.push(newPost);
-    document.getElementById("message").value = "";
+  if (password !== "1225") {
+    errorEl.textContent = 'パスワードが間違っています';
+    return;
   }
-});
 
-// 表示
-postRef.on("child_added", (snapshot) => {
-  const data = snapshot.val();
-  const key = snapshot.key;
-  const post = document.createElement("div");
-  post.className = "post";
-  post.innerHTML = `
-    <strong>${data.name}</strong>: ${data.content}<br>
-    <button onclick="deletePost('${key}')">削除</button>
-    <hr>
-  `;
-  document.getElementById("posts").prepend(post);
-});
+  const postData = {
+    message: message,
+    timestamp: Date.now()
+  };
 
-// 削除
-function deletePost(key) {
-  const pw = prompt("削除するにはパスワードを入力してください");
-  if (pw === PASSWORD) {
-    postRef.child(key).remove();
-    location.reload();
-  } else {
-    alert("パスワードが違います。");
-  }
+  database.ref('messages').push(postData);
+
+  document.getElementById('message').value = '';
+  document.getElementById('postPassword').value = '';
 }
+
+// メッセージ読み込み
+database.ref('messages').on('value', (snapshot) => {
+  const messagesDiv = document.getElementById('messages');
+  messagesDiv.innerHTML = '';
+
+  const messages = snapshot.val();
+  if (messages) {
+    Object.entries(messages).reverse().forEach(([id, data]) => {
+      const div = document.createElement('div');
+      div.className = 'message';
+      div.innerHTML = `
+        <p>${data.message}</p>
+        <small>${new Date(data.timestamp).toLocaleString()}</small>
+      `;
+      messagesDiv.appendChild(div);
+    });
+  }
+});
