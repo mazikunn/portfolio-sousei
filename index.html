@@ -1,30 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>作成倉庫メモリー｜掲示板</title>
+  <title>ご意見箱</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>作成倉庫メモリー｜掲示板</h1>
+    <h1>書き込み内容</h1>
+    <form id="messageForm">
+      <textarea id="messageInput" placeholder="ここに内容を書いてください" required></textarea>
+      <input type="password" id="passwordInput" placeholder="パスワード（4桁）" required>
+      <button type="submit">投稿</button>
+    </form>
 
-    <!-- 投稿フォーム -->
-    <label for="message">書き込み内容</label>
-    <textarea id="message" rows="4" placeholder="ここにご意見・メッセージをどうぞ"></textarea>
-
-    <label for="postPassword">パスワード（4桁）</label>
-    <input type="password" id="postPassword" placeholder="">
-
-    <button onclick="postMessage()">投稿</button>
-    <p id="postError" class="error"></p>
-
-    <hr>
-
-    <!-- メッセージ表示 -->
-    <div id="messages"></div>
+    <div id="messagesContainer"></div>
   </div>
 
   <script src="script.js"></script>
