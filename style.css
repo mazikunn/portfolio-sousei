@@ -1,17 +1,17 @@
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f9;
+  font-family: sans-serif;
+  background-color: #f2f2f2;
   margin: 0;
   padding: 0;
 }
 
 .container {
   max-width: 600px;
-  margin: 50px auto;
-  background: #ffffff;
+  margin: 40px auto;
   padding: 20px;
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 h1 {
@@ -23,63 +23,39 @@ label {
   display: block;
   margin-top: 15px;
   font-weight: bold;
-  color: #444;
 }
 
-textarea,
-input[type="password"] {
+textarea, input {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
-  border: 1px solid #ccc;
   border-radius: 8px;
-  resize: vertical;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 button {
-  display: block;
-  margin-top: 20px;
-  padding: 10px 15px;
+  margin-top: 15px;
   width: 100%;
-  background-color: #4CAF50;
-  color: white;
+  padding: 10px;
+  background: #007BFF;
   border: none;
-  border-radius: 8px;
+  color: white;
   font-size: 16px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
 }
 
 button:hover {
-  background-color: #45a049;
+  background: #0056b3;
 }
 
 .message {
-  border-bottom: 1px solid #ddd;
-  padding: 12px 0;
-}
-
-.message p {
-  margin: 4px 0;
-}
-
-.message small {
-  color: #888;
-}
-
-.delete-form {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-}
-
-.delete-form input {
-  margin-bottom: 8px;
+  border-top: 1px solid #ddd;
+  padding: 10px 0;
 }
 
 .error {
   color: red;
   font-size: 14px;
-  margin-top: 5px;
-  text-align: center;
 }
