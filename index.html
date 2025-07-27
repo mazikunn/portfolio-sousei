@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>掲示板</title>
+  <title>作成倉庫メモリー｜掲示板</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
@@ -15,8 +15,8 @@
     <label for="message">書き込み内容</label>
     <textarea id="message" rows="4" placeholder="ここにご意見・メッセージをどうぞ"></textarea>
 
-    <label for="postPassword">投稿用パスワード（4桁）</label>
-    <input type="password" id="postPassword" placeholder="1225 を入力してください">
+    <label for="postPassword">パスワード（4桁）</label>
+    <input type="password" id="postPassword" placeholder="">
 
     <button onclick="postMessage()">投稿</button>
     <p id="postError" class="error"></p>
