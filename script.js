@@ -1,37 +1,51 @@
-// メッセージをローカルストレージから読み込み
-window.addEventListener("DOMContentLoaded", function () {
-  const savedMessages = JSON.parse(localStorage.getItem("messages")) || [];
-  const messageList = document.getElementById("messages");
-  savedMessages.forEach(msg => {
-    const li = document.createElement("li");
-    li.textContent = msg;
-    messageList.appendChild(li);
-  });
-});
+// script.js
+const db = firebase.database();
+const postRef = db.ref("posts");
+const PASSWORD = "1225";
 
-// 書き込み処理（パスワード付き）
-document.getElementById("messageForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+// 書き込み
+document.getElementById("submitBtn").addEventListener("click", () => {
+  const name = document.getElementById("name").value || "匿名";
+  const content = document.getElementById("message").value;
+  const pw = prompt("4桁のパスワードを入力してください");
 
-  const passwordInput = document.getElementById("password").value;
-  const messageInput = document.getElementById("message").value;
-  const correctPassword = "1225";
+  if (pw !== PASSWORD) {
+    alert("パスワードが違います。");
+    return;
+  }
 
-  if (passwordInput === correctPassword) {
-    const messageList = document.getElementById("messages");
-    const newItem = document.createElement("li");
-    newItem.textContent = messageInput;
-    messageList.appendChild(newItem);
-
-    // 保存処理
-    const savedMessages = JSON.parse(localStorage.getItem("messages")) || [];
-    savedMessages.push(messageInput);
-    localStorage.setItem("messages", JSON.stringify(savedMessages));
-
-    // 入力欄をクリア
+  if (content.trim()) {
+    const newPost = {
+      name: name,
+      content: content,
+      timestamp: Date.now()
+    };
+    postRef.push(newPost);
     document.getElementById("message").value = "";
-    document.getElementById("password").value = "";
-  } else {
-    alert("パスワードが間違っています。");
   }
 });
+
+// 表示
+postRef.on("child_added", (snapshot) => {
+  const data = snapshot.val();
+  const key = snapshot.key;
+  const post = document.createElement("div");
+  post.className = "post";
+  post.innerHTML = `
+    <strong>${data.name}</strong>: ${data.content}<br>
+    <button onclick="deletePost('${key}')">削除</button>
+    <hr>
+  `;
+  document.getElementById("posts").prepend(post);
+});
+
+// 削除
+function deletePost(key) {
+  const pw = prompt("削除するにはパスワードを入力してください");
+  if (pw === PASSWORD) {
+    postRef.child(key).remove();
+    location.reload();
+  } else {
+    alert("パスワードが違います。");
+  }
+}
