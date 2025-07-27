@@ -1,63 +1,52 @@
-// Firebase 初期化
+// Firebase設定（★ここをあなたのプロジェクトに合わせて書き換えてください）
 const firebaseConfig = {
-  databaseURL: "https://YOUR_PROJECT.firebaseio.com" // ←ここを自分のURLに変更
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "SENDER_ID",
+  appId: "APP_ID"
 };
+
+// Firebase初期化
 firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-const messagesRef = database.ref("messages");
+const db = firebase.database();
 
-// 投稿処理
-document.getElementById("messageForm").addEventListener("submit", (e) => {
+const form = document.getElementById("postForm");
+const messageInput = document.getElementById("message");
+const passwordInput = document.getElementById("password");
+const messagesList = document.getElementById("messagesList");
+
+form.addEventListener("submit", (e) => {
   e.preventDefault();
-
-  const message = document.getElementById("messageInput").value.trim();
-  const password = document.getElementById("passwordInput").value;
+  const message = messageInput.value.trim();
+  const password = passwordInput.value.trim();
 
   if (password !== "1225") {
     alert("パスワードが違います。");
     return;
   }
 
-  if (message === "") return;
-
-  const newMessageRef = messagesRef.push();
-  newMessageRef.set({
-    text: message,
-    timestamp: Date.now()
-  });
-
-  document.getElementById("messageInput").value = "";
-  document.getElementById("passwordInput").value = "";
+  if (message) {
+    const newPostRef = db.ref("messages").push();
+    newPostRef.set({
+      text: message,
+      timestamp: Date.now()
+    });
+    messageInput.value = "";
+    passwordInput.value = "";
+  }
 });
 
-// メッセージ表示
 function displayMessages() {
-  messagesRef.orderByChild("timestamp").on("value", (snapshot) => {
-    const container = document.getElementById("messagesContainer");
-    container.innerHTML = "";
-
+  db.ref("messages").orderByChild("timestamp").on("value", (snapshot) => {
+    messagesList.innerHTML = "";
     snapshot.forEach((childSnapshot) => {
-      const messageData = childSnapshot.val();
-      const messageId = childSnapshot.key;
-
-      const div = document.createElement("div");
-      div.className = "message";
-      div.innerText = messageData.text;
-
-      const deleteBtn = document.createElement("button");
-      deleteBtn.className = "delete-btn";
-      deleteBtn.innerText = "削除";
-      deleteBtn.onclick = () => {
-        const pw = prompt("削除パスワードを入力してください:");
-        if (pw === "1225") {
-          messagesRef.child(messageId).remove();
-        } else {
-          alert("パスワードが違います。");
-        }
-      };
-
-      div.appendChild(deleteBtn);
-      container.appendChild(div);
+      const msg = childSnapshot.val().text;
+      const li = document.createElement("li");
+      li.textContent = msg;
+      messagesList.appendChild(li);
     });
   });
 }
