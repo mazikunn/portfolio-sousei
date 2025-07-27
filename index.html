@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>ご意見箱</title>
+  <title>書き込み掲示板</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>ご意見箱</h1>
-    <form id="postForm">
-      <label for="message">書き込み内容:</label>
-      <textarea id="message" required></textarea><br>
-      <label for="password">パスワード（4桁）:</label>
-      <input type="password" id="password" maxlength="4" required><br>
-      <button type="submit">投稿</button>
-    </form>
+  <h1>書き込み内容</h1>
 
-    <div id="messagesContainer">
-      <h2>投稿一覧</h2>
-      <ul id="messagesList"></ul>
+  <form id="messageForm">
+    <textarea id="messageInput" placeholder="内容を入力してください" required></textarea><br>
+    <input type="password" id="passwordInput" placeholder="パスワード（4桁）" required><br>
+    <button type="submit">投稿</button>
+  </form>
+
+  <div id="messageContainer"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <!-- 自作スクリプト -->
+  <script src="script.js"></script>
+</body>
+</html>
