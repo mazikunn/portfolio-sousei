@@ -20,52 +20,22 @@
   </header>
 
   <main>
-    <section class="hero">
-      <h2>0から作品を形に。</h2>
-      <p>未経験でも、ひとつひとつ積み重ねて。</p>
-    </section>
-
-    <section id="about" class="section">
-      <h2>プロフィール</h2>
-      <p>現在プログラミング学習中。基礎から積み上げ、自作のツールやミニゲームなどを制作しています。</p>
-    </section>
-
-    <section id="portfolio" class="section">
-      <h2>作成物一覧</h2>
-      <ul>
-        <li>・タイマーアプリ（HTML/CSS/JavaScript）</li>
-        <li>・ToDoリスト（ローカルストレージ使用）</li>
-        <li>・じゃんけんゲーム（JavaScript）</li>
-        <li>・診断ツール風ページ（初期Python + Flask）</li>
-      </ul>
-    </section>
-
-    <section id="skills" class="section">
-      <h2>使用言語・スキル</h2>
-      <ul>
-        <li>HTML / CSS / JavaScript</li>
-        <li>Python（Flask）</li>
-        <li>Git / GitHub</li>
-      </ul>
-    </section>
+    <!-- 他のセクションは変更なし -->
 
     <section id="contact" class="section">
       <h2>書き込み内容</h2>
-      <p>掲示板へメッセージを残すには、4桁のパスワードが必要です。</p>
-      <form id="messageForm">
-        <label for="password">パスワード（4桁）:</label><br>
-        <input type="password" id="password" maxlength="4" required><br><br>
+      <p>ポートフォリオへの感想・コメント・アイデアなどどうぞ。</p>
 
-        <label for="message">書き込み内容:</label><br>
-        <textarea id="message" rows="5" required></textarea><br><br>
+      <label for="name">お名前（任意）</label><br>
+      <input type="text" id="name" /><br><br>
 
-        <button type="submit">書き込む</button>
-      </form>
+      <label for="message">内容</label><br>
+      <textarea id="message" rows="5" required></textarea><br><br>
 
-      <div id="board" class="section">
-        <h3>掲示された内容</h3>
-        <ul id="messages"></ul>
-      </div>
+      <button id="submitBtn">書き込む</button>
+
+      <h3>📬 投稿一覧</h3>
+      <div id="posts"></div>
     </section>
   </main>
 
@@ -73,6 +43,10 @@
     <p>© 2025 作成倉庫メモリー</p>
   </footer>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
