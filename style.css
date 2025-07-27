@@ -1,94 +1,85 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
   margin: 0;
   padding: 0;
-  line-height: 1.6;
 }
 
-header {
-  background: #333;
-  color: white;
-  padding: 1rem;
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-header h1 {
-  margin: 0;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-  padding: 0;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-}
-
-.hero {
-  padding: 2rem;
-  background: #f4f4f4;
+h1 {
   text-align: center;
+  color: #333;
 }
 
-.section {
-  padding: 2rem;
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #444;
 }
 
-form {
-  max-width: 500px;
-  margin: auto;
-}
-
-input[type="text"],
-input[type="password"],
-textarea {
+textarea,
+input[type="password"] {
   width: 100%;
   padding: 10px;
-  font-size: 1em;
+  margin-top: 5px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
+  resize: vertical;
 }
 
-button[type="submit"] {
-  background-color: #e74c3c;
+button {
+  display: block;
+  margin-top: 20px;
+  padding: 10px 15px;
+  width: 100%;
+  background-color: #4CAF50;
   color: white;
-  padding: 10px 20px;
-  font-size: 1em;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
-button[type="submit"]:hover {
-  background-color: #c0392b;
+button:hover {
+  background-color: #45a049;
 }
 
-footer {
+.message {
+  border-bottom: 1px solid #ddd;
+  padding: 12px 0;
+}
+
+.message p {
+  margin: 4px 0;
+}
+
+.message small {
+  color: #888;
+}
+
+.delete-form {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-form input {
+  margin-bottom: 8px;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
   text-align: center;
-  background: #eee;
-  padding: 1rem;
-  font-size: 0.9em;
-}
-
-@media (max-width: 600px) {
-  nav ul {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-#board {
-  margin-top: 2rem;
-  background-color: #fafafa;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-#messages {
-  list-style-type: disc;
-  padding-left: 1.2rem;
 }
