@@ -1,52 +1,32 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>作成倉庫メモリー</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>掲示板</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 </head>
 <body>
-  <header>
-    <h1>作成倉庫メモリー</h1>
-    <nav>
-      <ul>
-        <li><a href="#about">プロフィール</a></li>
-        <li><a href="#portfolio">作成物</a></li>
-        <li><a href="#skills">スキル</a></li>
-        <li><a href="#contact">書き込み内容</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="container">
+    <h1>作成倉庫メモリー｜掲示板</h1>
 
-  <main>
-    <!-- 他のセクションは変更なし -->
+    <!-- 投稿フォーム -->
+    <label for="message">書き込み内容</label>
+    <textarea id="message" rows="4" placeholder="ここにご意見・メッセージをどうぞ"></textarea>
 
-    <section id="contact" class="section">
-      <h2>書き込み内容</h2>
-      <p>ポートフォリオへの感想・コメント・アイデアなどどうぞ。</p>
+    <label for="postPassword">投稿用パスワード（4桁）</label>
+    <input type="password" id="postPassword" placeholder="1225 を入力してください">
 
-      <label for="name">お名前（任意）</label><br>
-      <input type="text" id="name" /><br><br>
+    <button onclick="postMessage()">投稿</button>
+    <p id="postError" class="error"></p>
 
-      <label for="message">内容</label><br>
-      <textarea id="message" rows="5" required></textarea><br><br>
+    <hr>
 
-      <button id="submitBtn">書き込む</button>
+    <!-- メッセージ表示 -->
+    <div id="messages"></div>
+  </div>
 
-      <h3>📬 投稿一覧</h3>
-      <div id="posts"></div>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 作成倉庫メモリー</p>
-  </footer>
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
-  <script src="firebase-config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
