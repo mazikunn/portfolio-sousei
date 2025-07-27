@@ -14,7 +14,7 @@
         <li><a href="#about">プロフィール</a></li>
         <li><a href="#portfolio">作成物</a></li>
         <li><a href="#skills">スキル</a></li>
-        <li><a href="#contact">ご意見箱</a></li>
+        <li><a href="#contact">書き込み内容</a></li>
       </ul>
     </nav>
   </header>
@@ -50,22 +50,29 @@
     </section>
 
     <section id="contact" class="section">
-      <h2>ご意見箱</h2>
-      <p>このポートフォリオへのご感想・改善点・応援メッセージなど、お気軽にお寄せください。</p>
-      <form action="https://formspree.io/f/your-form-id" method="POST">
-        <label for="name">お名前（任意）</label><br>
-        <input type="text" id="name" name="name"><br><br>
+      <h2>書き込み内容</h2>
+      <p>掲示板へメッセージを残すには、4桁のパスワードが必要です。</p>
+      <form id="messageForm">
+        <label for="password">パスワード（4桁）:</label><br>
+        <input type="password" id="password" maxlength="4" required><br><br>
 
-        <label for="message">ご意見・ご感想</label><br>
-        <textarea id="message" name="message" rows="5" required></textarea><br><br>
+        <label for="message">書き込み内容:</label><br>
+        <textarea id="message" rows="5" required></textarea><br><br>
 
-        <button type="submit">送信する</button>
+        <button type="submit">書き込む</button>
       </form>
+
+      <div id="board" class="section">
+        <h3>掲示された内容</h3>
+        <ul id="messages"></ul>
+      </div>
     </section>
   </main>
 
   <footer>
     <p>© 2025 作成倉庫メモリー</p>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
