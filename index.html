@@ -4,21 +4,21 @@
   <meta charset="UTF-8">
   <title>ご意見箱</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>書き込み内容</h1>
-    <form id="messageForm">
-      <textarea id="messageInput" placeholder="ここに内容を書いてください" required></textarea>
-      <input type="password" id="passwordInput" placeholder="パスワード（4桁）" required>
+    <h1>ご意見箱</h1>
+    <form id="postForm">
+      <label for="message">書き込み内容:</label>
+      <textarea id="message" required></textarea><br>
+      <label for="password">パスワード（4桁）:</label>
+      <input type="password" id="password" maxlength="4" required><br>
       <button type="submit">投稿</button>
     </form>
 
-    <div id="messagesContainer"></div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <div id="messagesContainer">
+      <h2>投稿一覧</h2>
+      <ul id="messagesList"></ul>
