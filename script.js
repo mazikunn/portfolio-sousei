@@ -1,63 +1,65 @@
 // Firebase 初期化
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  databaseURL: "https://YOUR_PROJECT.firebaseio.com" // ←ここを自分のURLに変更
 };
-
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
+const messagesRef = database.ref("messages");
 
 // 投稿処理
-function postMessage() {
-  const message = document.getElementById('message').value.trim();
-  const password = document.getElementById('postPassword').value.trim();
-  const errorEl = document.getElementById('postError');
+document.getElementById("messageForm").addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  errorEl.textContent = '';
-
-  if (!message) {
-    errorEl.textContent = '書き込み内容を入力してください。';
-    return;
-  }
+  const message = document.getElementById("messageInput").value.trim();
+  const password = document.getElementById("passwordInput").value;
 
   if (password !== "1225") {
-    errorEl.textContent = 'パスワードが違います。';
+    alert("パスワードが違います。");
     return;
   }
 
-  const postData = {
-    message: message,
+  if (message === "") return;
+
+  const newMessageRef = messagesRef.push();
+  newMessageRef.set({
+    text: message,
     timestamp: Date.now()
-  };
+  });
 
-  database.ref('messages').push(postData);
+  document.getElementById("messageInput").value = "";
+  document.getElementById("passwordInput").value = "";
+});
 
-  // フォーム初期化
-  document.getElementById('message').value = '';
-  document.getElementById('postPassword').value = '';
+// メッセージ表示
+function displayMessages() {
+  messagesRef.orderByChild("timestamp").on("value", (snapshot) => {
+    const container = document.getElementById("messagesContainer");
+    container.innerHTML = "";
+
+    snapshot.forEach((childSnapshot) => {
+      const messageData = childSnapshot.val();
+      const messageId = childSnapshot.key;
+
+      const div = document.createElement("div");
+      div.className = "message";
+      div.innerText = messageData.text;
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "delete-btn";
+      deleteBtn.innerText = "削除";
+      deleteBtn.onclick = () => {
+        const pw = prompt("削除パスワードを入力してください:");
+        if (pw === "1225") {
+          messagesRef.child(messageId).remove();
+        } else {
+          alert("パスワードが違います。");
+        }
+      };
+
+      div.appendChild(deleteBtn);
+      container.appendChild(div);
+    });
+  });
 }
 
-// メッセージ取得・表示（新しい順に）
-database.ref('messages').on('value', (snapshot) => {
-  const messagesDiv = document.getElementById('messages');
-  messagesDiv.innerHTML = '';
-
-  const messages = snapshot.val();
-  if (messages) {
-    const messageList = Object.entries(messages).sort((a, b) => b[1].timestamp - a[1].timestamp);
-    messageList.forEach(([id, data]) => {
-      const div = document.createElement('div');
-      div.className = 'message';
-      div.innerHTML = `
-        <p>${data.message}</p>
-        <small>${new Date(data.timestamp).toLocaleString()}</small>
-      `;
-      messagesDiv.appendChild(div);
-    });
-  }
-});
+displayMessages();
